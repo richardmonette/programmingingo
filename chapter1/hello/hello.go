@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+func printer() string {
+	return "Hello World!"
+}
+
 func main() {
 	who := "World!" // := operator is a 'short variable declaration' which declares and initalizes a variable at the same time
 	if len(os.Args) > 1 {
