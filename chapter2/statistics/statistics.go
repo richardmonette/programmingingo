@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"strings"
 	"strconv"
+	"math"
 )
 
 const form = `<form action="/" method="POST">
@@ -23,6 +24,8 @@ type statistics struct {
 	numbers []float64
 	mean float64
 	median float64
+	mode []float64
+	stddev float64
 }
 
 func sum(numbers []float64) (total float64) {
@@ -41,11 +44,28 @@ func median(numbers []float64) float64 {
 	return result
 }
 
+func mode(numbers []float64) []float64 {
+	x := []float64{1,2,3}
+	return x
+}
+
+func stddev(numbers []float64) float64 {
+	n := float64(len(numbers))
+	mean := sum(numbers) / float64(len(numbers))
+	var total float64
+	for _, x := range numbers {
+		total += math.Pow(x - mean, 2)
+	}
+	return math.Sqrt(total / (n-1))
+}
+
 func getStats(numbers []float64) (stats statistics) {
 	stats.numbers = numbers
 	sort.Float64s(stats.numbers)
 	stats.mean = sum(numbers) / float64(len(numbers))
 	stats.median = median(numbers)
+	stats.mode = mode(numbers)
+	stats.stddev = stddev(numbers)
 	return stats
 }
 
@@ -56,7 +76,9 @@ func formatStats(stats statistics) string {
 <tr><td>Count</td><td>%d</td></tr>
 <tr><td>Mean</td><td>%f</td></tr>
 <tr><td>Median</td><td>%f</td></tr>
-</table>`, stats.numbers, len(stats.numbers), stats.mean, stats.median)
+<tr><td>Mode</td><td>%v</td></tr>
+<tr><td>Std. Dev.</td><td>%f</td></tr>
+</table>`, stats.numbers, len(stats.numbers), stats.mean, stats.median, stats.mode, stats.stddev)
 }
 
 func processRequest(request *http.Request) ([]float64, string, bool) {
