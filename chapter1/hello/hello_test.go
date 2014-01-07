@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"fmt"
+)
 
 func TestPrinter(t *testing.T) {
 
@@ -10,6 +13,10 @@ func TestPrinter(t *testing.T) {
 
 	if (actual != expected) {
 		t.Errorf("ERROR %s %s", actual, expected)
+	}
+	else
+	{
+		fmt.Println("Test passed")
 	}
 
 }
