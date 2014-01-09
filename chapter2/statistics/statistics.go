@@ -81,10 +81,14 @@ func stddev(numbers []float64) float64 {
 	return math.Sqrt(total / (n-1))
 }
 
+func mean(numbers []float64) float64 {
+	return sum(numbers) / float64(len(numbers))
+}
+
 func getStats(numbers []float64) (stats statistics) {
 	stats.numbers = numbers
 	sort.Float64s(stats.numbers)
-	stats.mean = sum(numbers) / float64(len(numbers))
+	stats.mean = mean(numbers)
 	stats.median = median(numbers)
 	stats.mode = mode(numbers)
 	stats.stddev = stddev(numbers)
