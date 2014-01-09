@@ -45,8 +45,30 @@ func median(numbers []float64) float64 {
 }
 
 func mode(numbers []float64) []float64 {
-	x := []float64{1,2,3}
-	return x
+	var m map[float64]int
+	m = make(map[float64]int)
+
+	for _, x := range numbers {
+		m[x]++
+	}
+
+	var highest int
+
+	for _, value := range m {
+		if value > highest {
+			highest = value
+		}
+	}
+
+	var retVal []float64
+
+	for key, value := range m {
+		if value == highest {
+			retVal = append(retVal, key)
+		}
+	}
+
+	return retVal
 }
 
 func stddev(numbers []float64) float64 {
