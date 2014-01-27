@@ -2,17 +2,21 @@ package main
 
 import (
 	"testing"
+	"io/ioutil"
 )
 
-func TestM3u2Pls(t *testing.T) {
-	if rawBytes, err:= ioutil.ReadFile(os.Args[1]); err != nil {
-		log.Fatal(err)
-	} else {
-		songs := readM3uPlaylist(string(rawBytes))
-		writePlsPlaylist(songs)
+func TestReadM3u(t *testing.T) {
+	rawBytes, _ := ioutil.ReadFile("data/m3u_input.m3u")
+	songs := readM3uPlaylist(string(rawBytes))
+	if songs[0].Title != "Allah-Las - Catamaran" {
+		t.Errorf("Song title doesn't match. Got: %s Expected %s", songs[0].Title, "Allah-Las - Catamaran") 
 	}
 }
 
-func TestPls2M3u(t *testing.T) {
-
+func TestReadPls(t *testing.T) {
+	rawBytes, _ := ioutil.ReadFile("data/pls_input.pls")
+	songs := readPlsPlaylist(string(rawBytes))
+	if songs[0].Title != "Allah-Las - Catamaran" {
+		t.Errorf("Song title doesn't match. Got: %s Expected %s", songs[0].Title, "Allah-Las - Catamaran") 
+	}
 }
